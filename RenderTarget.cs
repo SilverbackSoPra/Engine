@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 
+// Test comment
 namespace Monogame_Engine.Engine
 {
     class RenderTarget
