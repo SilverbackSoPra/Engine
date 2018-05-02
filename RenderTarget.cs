@@ -5,12 +5,12 @@ namespace Monogame_Engine.Engine
     class RenderTarget
     {
 
-        private RenderTarget2D mMainRenderTarget;
+        public RenderTarget2D mMainRenderTarget;
         private Texture2D mShadowMap;
 
-        public RenderTarget(int width, uint height, uint shadowMapResolution)
+        public RenderTarget(GraphicsDevice device, int width, int height, int shadowMapResolution)
         {
-            
+            mMainRenderTarget = new RenderTarget2D(device, width, height, true, SurfaceFormat.HalfVector4, DepthFormat.Depth24);
         }
 
     }
