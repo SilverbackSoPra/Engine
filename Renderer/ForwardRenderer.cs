@@ -22,12 +22,6 @@ namespace Monogame_Engine.Engine.Renderer
         public void Render(RenderTarget target, Camera camera, Scene scene)
         {
 
-            // We dont have any transparent meshes
-            mGraphicsDevice.BlendState = BlendState.Opaque;
-            mGraphicsDevice.DepthStencilState = DepthStencilState.Default;
-            // We want to cull all faces which are backfacing
-            mGraphicsDevice.RasterizerState = RasterizerState.CullCounterClockwise;
-
             mShader.mViewMatrix = camera.mViewMatrix;
             mShader.mProjectionMatrix = camera.mProjectionMatrix;
 
