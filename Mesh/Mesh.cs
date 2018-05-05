@@ -14,6 +14,8 @@ namespace Monogame_Engine.Engine.Mesh
 
             mModel = model;
 
+            // How to use animations: 
+
             mMeshParts = new List<ModelMeshPart>();
 
             for (ushort i = 0; i < mModel.Meshes.Count; i++)

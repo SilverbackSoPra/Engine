@@ -48,7 +48,6 @@ namespace Monogame_Engine.Engine.Renderer
                      this kind of programming. One way would be to process the
                      models which are loaded with Monogame into the Mesh Class.
                     */
-
                     var effect = (BasicEffect)meshPart.Effect;
 
                     mShader.ApplyMaterial(effect.Texture);

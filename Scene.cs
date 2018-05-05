@@ -11,7 +11,8 @@ namespace Monogame_Engine.Engine
     {
 
         public readonly List<ActorBatch> mActorBatches;
-        public readonly Light mDirectionalLight;
+        public readonly List<Light> mLights;
+        public readonly PostProcessing mPostProcessing;
 
         /// <summary>
         /// Constructs a <see cref="Scene"/>.
@@ -19,7 +20,7 @@ namespace Monogame_Engine.Engine
         public Scene()
         {
             mActorBatches = new List<ActorBatch>();
-            mDirectionalLight = new Light();
+            mLights = new List<Light>();
         }
 
         /// <summary>
@@ -56,6 +57,29 @@ namespace Monogame_Engine.Engine
             var actorBatch = mActorBatches.Find(ele => ele.mMesh == actor.mMesh);
 
             return actorBatch?.Remove(actor);
+
+        }
+
+        /// <summary>
+        /// Adds a light to the scene.
+        /// </summary>
+        /// <param name="light">The light which you want to add to the scene</param>
+        public void Add(Light light)
+        {
+
+           mLights.Add(light);
+
+        }
+
+        /// <summary>
+        /// Removes a light from the scene.
+        /// </summary>
+        /// <param name="light"></param>
+        /// <returns>A boolean whether the light was found in the scene.</returns>
+        public bool Remove(Light light)
+        {
+
+            return mLights.Remove(light);
 
         }
 

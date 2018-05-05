@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
+﻿using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Monogame_Engine.Engine.Shader;
 
@@ -10,13 +9,13 @@ namespace Monogame_Engine.Engine.Renderer
 
         private readonly PostProcessShader mShader;
 
-        private readonly SpriteBatch mSpriteBatch;
+        private readonly GraphicsDevice mDevice;
 
-        public PostProcessRenderer(ContentManager content, string shaderPath, SpriteBatch spriteBatch)
+        public PostProcessRenderer(GraphicsDevice device, ContentManager content, string shaderPath)
         {
-            mSpriteBatch = spriteBatch;
+            mDevice = device;
 
-            // mShader = new PostProcessShader(content, shaderPath);
+            mShader = new PostProcessShader(content, shaderPath);
 
         }
 
@@ -27,15 +26,15 @@ namespace Monogame_Engine.Engine.Renderer
             We don't want use the SpriteBatch class and should change to our own vertex structure
             To improve this: http://www.riemers.net/eng/Tutorials/XNA/Csharp/Series1/Terrain_lighting.php
             Some further resources: https://docs.microsoft.com/en-us/previous-versions/windows/silverlight/dotnet-windows-silverlight/bb199731%28v%3dxnagamestudio.35%29
+            and: http://www.riemers.net/eng/Tutorials/XNA/Csharp/Series1/VertexBuffer_and_IndexBuffer.php
             */
 
-            mSpriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Opaque,
-                SamplerState.LinearClamp, DepthStencilState.Default,
-                RasterizerState.CullNone);
+            mShader.mAlbedoMap = target.mMainRenderTarget;
+            mShader.mSaturation = 1.0f;
 
-            mSpriteBatch.Draw(target.mMainRenderTarget, new Rectangle(0, 0, 1280, 720), Color.White);
+            mShader.Apply();
 
-            mSpriteBatch.End();
+            mDevice.DrawPrimitives(PrimitiveType.TriangleStrip, 0, 4);
 
         }
     }
