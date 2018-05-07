@@ -4,15 +4,23 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Monogame_Engine.Engine.Shader
 {
+
     internal sealed class ForwardShader : Shader
     {
         private readonly EffectParameter mAlbedoMapParameter;
         private readonly EffectParameter mModelMatrixParameter;
         private readonly EffectParameter mViewMatrixParameter;
         private readonly EffectParameter mProjectionMatrixParameter;
+        private readonly EffectParameter mGlobalLightLocationParameter;
+        private readonly EffectParameter mGlobalLightColorParameter;
+        private readonly EffectParameter mGlobalLightAmbientParameter;
 
         public Matrix mViewMatrix;
         public Matrix mProjectionMatrix;
+
+        public Vector3 mGlobalLightLocation;
+        public Vector3 mGlobalLightColor;
+        public float mGlobalLightAmbient;
 
         public ForwardShader(ContentManager content, string shaderPath) : base(content, shaderPath)
         { 
@@ -22,6 +30,9 @@ namespace Monogame_Engine.Engine.Shader
             mProjectionMatrixParameter = mShader.Parameters["projectionMatrix"];
 
             mAlbedoMapParameter = mShader.Parameters["albedoMap"];
+            mGlobalLightLocationParameter = mShader.Parameters["lightLocation"];
+            mGlobalLightColorParameter = mShader.Parameters["lightColor"];
+            mGlobalLightAmbientParameter = mShader.Parameters["lightAmbient"];
 
         }
 
@@ -32,6 +43,10 @@ namespace Monogame_Engine.Engine.Shader
             // TODO: We should check whether the matrices are not null
             mViewMatrixParameter.SetValue(mViewMatrix);
             mProjectionMatrixParameter.SetValue(mProjectionMatrix);
+
+            mGlobalLightLocationParameter.SetValue(mGlobalLightLocation);
+            mGlobalLightColorParameter.SetValue(mGlobalLightColor);
+            mGlobalLightAmbientParameter.SetValue(mGlobalLightAmbient);
 
             base.Apply();
         }

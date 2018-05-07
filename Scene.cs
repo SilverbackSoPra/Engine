@@ -7,7 +7,7 @@ namespace Monogame_Engine.Engine
     /// The Scene class is used to represent a scene. This is useful
     /// if we want many actors in one place e.g for a level.
     /// </summary>
-    class Scene
+    internal sealed class Scene
     {
 
         public readonly List<ActorBatch> mActorBatches;
@@ -19,8 +19,12 @@ namespace Monogame_Engine.Engine
         /// </summary>
         public Scene()
         {
+
             mActorBatches = new List<ActorBatch>();
             mLights = new List<Light>();
+
+            mPostProcessing = new PostProcessing();
+
         }
 
         /// <summary>

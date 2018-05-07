@@ -2,12 +2,19 @@
 
 namespace Monogame_Engine.Engine.Mesh
 {
-    class Actor
+    /// <summary>
+    /// An actor represents an instance of a mesh in a scene.
+    /// </summary>
+    internal sealed class Actor
     {
 
-        public Mesh mMesh;
+        public readonly Mesh mMesh;
         public Matrix mModelMatrix;
 
+        /// <summary>
+        /// Constructs an <see cref="Actor"/>.
+        /// </summary>
+        /// <param name="mesh"></param>
         public Actor(Mesh mesh)
         {
 

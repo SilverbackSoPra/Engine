@@ -1,16 +1,14 @@
-﻿using System.Runtime.Remoting.Messaging;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Monogame_Engine.Engine;
-using Monogame_Engine.Engine.Renderer;
+using Monogame_Engine.Engine.Helper;
 
 namespace Monogame_Engine.Engine.Renderer
 {
     /// <summary>
     /// A new type of Vertex structure which is used to just transfer texture coordinates.
     /// </summary>
-    public struct VertexTexture
+    internal struct VertexTexture
     {
         private Vector2 mTextureCoordinate;
 
@@ -26,7 +24,10 @@ namespace Monogame_Engine.Engine.Renderer
 
     }
 
-    public struct Quad
+    /// <summary>
+    /// Used to render a full screen texture as a triangle strip.
+    /// </summary>
+    internal struct Quad
     {
         private static readonly VertexTexture[] sVertices = new VertexTexture[] { new VertexTexture(-1.0f, -1.0f),
             new VertexTexture(-1.0f, 1.0f), new VertexTexture(1.0f, -1.0f), new VertexTexture(1.0f, 1.0f) };
@@ -40,6 +41,9 @@ namespace Monogame_Engine.Engine.Renderer
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     internal sealed class MasterRenderer : IRenderer
     {
 
@@ -52,8 +56,13 @@ namespace Monogame_Engine.Engine.Renderer
 
         private readonly GraphicsDevice mGraphicsDevice;
 
-        private Quad mQuad;
+        private readonly Quad mQuad;
 
+        /// <summary>
+        /// Constructs a <see cref="MasterRenderer"/>.
+        /// </summary>
+        /// <param name="device">The graphics device which should already be initialized.</param>
+        /// <param name="content">The content manager which should already be initialized.</param>
         public MasterRenderer(GraphicsDevice device, ContentManager content)
         {
 
@@ -66,25 +75,36 @@ namespace Monogame_Engine.Engine.Renderer
 
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="camera"></param>
+        /// <param name="scene"></param>
         public void Render(RenderTarget target, Camera camera, Scene scene)
         {
             // Flat rendering: http://community.monogame.net/t/flat-shading-low-poly/8668
+            if (scene.mLights.Count <= 0)
+            {
+                throw new EngineInvalidParameterException("Scene does not contain a light");
+            }
+            else
+            {
+                mGraphicsDevice.BlendState = BlendState.Opaque;
+                mGraphicsDevice.RasterizerState = RasterizerState.CullCounterClockwise;
 
-            mGraphicsDevice.BlendState = BlendState.Opaque;
-            mGraphicsDevice.RasterizerState = RasterizerState.CullCounterClockwise;
+                mGraphicsDevice.SetRenderTarget(target.mMainRenderTarget);
 
-            mGraphicsDevice.SetRenderTarget(target.mMainRenderTarget);
+                mGraphicsDevice.Clear(Color.White);
 
-            mGraphicsDevice.Clear(Color.White);
+                mForwardRenderer.Render(target, camera, scene);
 
-            mForwardRenderer.Render(target, camera, scene);
+                mGraphicsDevice.SetRenderTarget(null);
 
-            mGraphicsDevice.SetRenderTarget(null);
+                mGraphicsDevice.SetVertexBuffer(mQuad.mBuffer);
 
-            mGraphicsDevice.SetVertexBuffer(mQuad.mBuffer);
-
-            mPostProcessRenderer.Render(target, camera, scene);
+                mPostProcessRenderer.Render(target, camera, scene);
+            }
 
         }
 

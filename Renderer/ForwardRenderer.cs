@@ -22,8 +22,14 @@ namespace Monogame_Engine.Engine.Renderer
         public void Render(RenderTarget target, Camera camera, Scene scene)
         {
 
+            Light globalLight = scene.mLights[0];
+
             mShader.mViewMatrix = camera.mViewMatrix;
             mShader.mProjectionMatrix = camera.mProjectionMatrix;
+
+            mShader.mGlobalLightLocation = globalLight.mLocation;
+            mShader.mGlobalLightColor = globalLight.mColor;
+            mShader.mGlobalLightAmbient = globalLight.mAmbient;
 
             mShader.Apply();
 
@@ -33,7 +39,8 @@ namespace Monogame_Engine.Engine.Renderer
                 foreach (var meshPart in actorBatch.mMesh.mMeshParts)
                 {
 
-                    // We only want to bind the materials and 
+                    // We only want to bind the materials once
+                    // https://classes.soe.ucsc.edu/cmps020/Winter10/slides/Feb23.pdf last page
                     mGraphicsDevice.SetVertexBuffer(meshPart.VertexBuffer);
                     mGraphicsDevice.Indices = (meshPart.IndexBuffer);
 

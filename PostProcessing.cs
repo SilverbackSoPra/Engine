@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace Monogame_Engine.Engine
 {
+    /// <summary>
+    /// 
+    /// </summary>
     class PostProcessing
     {
 
 
-
+        /// <summary>
+        /// Constructs a <see cref="PostProcessing"/>.
+        /// </summary>
         public PostProcessing()
         {
 

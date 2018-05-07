@@ -3,24 +3,29 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Monogame_Engine.Engine.Mesh
 {
-    class Mesh
+
+    /// <summary>
+    /// 
+    /// </summary>
+    internal sealed class Mesh
     {
-        private readonly Model mModel;
 
         public readonly List<ModelMeshPart> mMeshParts;
 
+        /// <summary>
+        /// Constructs a <see cref="Mesh"/>.
+        /// </summary>
+        /// <param name="model">A textured model which was loaded with the content pipeline of MonoGame.</param>
         public Mesh(Model model)
         {
-
-            mModel = model;
 
             // How to use animations: 
 
             mMeshParts = new List<ModelMeshPart>();
 
-            for (ushort i = 0; i < mModel.Meshes.Count; i++)
+            for (ushort i = 0; i < model.Meshes.Count; i++)
             {
-                var modelMesh = mModel.Meshes[i];
+                var modelMesh = model.Meshes[i];
 
                 for (ushort j = 0; j < modelMesh.MeshParts.Count; j++)
                 {
