@@ -61,10 +61,16 @@ namespace Monogame_Engine.Engine.Renderer
 
                     foreach (var actor in actorBatch.mActors)
                     {
-                        mShader.ApplyModelMatrix(actor.mModelMatrix);
 
-                        mGraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, vertexOffset, startIndex,
-                            primitiveCount);
+                        if (actor.mRender)
+                        {
+                            mShader.ApplyModelMatrix(actor.mModelMatrix);
+
+                            mGraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList,
+                                vertexOffset,
+                                startIndex,
+                                primitiveCount);
+                        }
 
                     }
                 }

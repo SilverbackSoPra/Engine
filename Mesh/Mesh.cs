@@ -12,6 +12,8 @@ namespace Monogame_Engine.Engine.Mesh
 
         public readonly List<ModelMeshPart> mMeshParts;
 
+        public readonly float mRadius;
+
         /// <summary>
         /// Constructs a <see cref="Mesh"/>.
         /// </summary>
@@ -20,6 +22,8 @@ namespace Monogame_Engine.Engine.Mesh
         {
 
             // How to use animations: 
+
+            mRadius = model.Meshes[0].BoundingSphere.Radius;
 
             mMeshParts = new List<ModelMeshPart>();
 

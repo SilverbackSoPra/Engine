@@ -20,6 +20,9 @@ namespace Monogame_Engine.Engine
         public Matrix mViewMatrix;
         public Matrix mProjectionMatrix;
 
+        public Vector3 Direction { get; private set; }
+        public Vector3 Up { get; private set; }
+
         /// <summary>
         /// Constructs a <see cref="Camera"/>.
         /// </summary>
@@ -55,15 +58,15 @@ namespace Monogame_Engine.Engine
         public void UpdateView()
         {
             // TODO: We need to change this to a 3rd person camera
-            var direction = Vector3.Normalize(new Vector3((float) (Cos(mRotation.Y) * Sin(mRotation.X)),
+            Direction = Vector3.Normalize(new Vector3((float) (Cos(mRotation.Y) * Sin(mRotation.X)),
                 (float) Sin(mRotation.Y),
                 (float) (Cos(mRotation.Y) * Cos(mRotation.X))));
 
             var right = new Vector3((float) Sin(mRotation.X - 3.14 / 2.0), 0.0f, (float) Cos(mRotation.X - 3.14 / 2.0));
 
-            var up = Vector3.Cross(direction, right);
+            Up = Vector3.Cross(Direction, right);
 
-            mViewMatrix = Matrix.CreateLookAt(mLocation, mLocation + direction, up);
+            mViewMatrix = Matrix.CreateLookAt(mLocation, mLocation + Direction, Up);
         }
 
         /// <summary>
@@ -72,7 +75,7 @@ namespace Monogame_Engine.Engine
         public void UpdatePerspective()
         {
             mProjectionMatrix =
-                Matrix.CreatePerspectiveFieldOfView(mFieldOfView / 180.0f * 3.14f, mAspectRatio, mNearPlane, mFarPlane);
+                Matrix.CreatePerspectiveFieldOfView(mFieldOfView / 180.0f * (float)PI, mAspectRatio, mNearPlane, mFarPlane);
         }
     }
 }

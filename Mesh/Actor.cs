@@ -11,6 +11,8 @@ namespace Monogame_Engine.Engine.Mesh
         public readonly Mesh mMesh;
         public Matrix mModelMatrix;
 
+        public bool mRender;
+
         /// <summary>
         /// Constructs an <see cref="Actor"/>.
         /// </summary>
@@ -20,6 +22,9 @@ namespace Monogame_Engine.Engine.Mesh
 
             mMesh = mesh;
             mModelMatrix = new Matrix();
+
+            // Actor should be rendered
+            mRender = true;
 
         }
     }
