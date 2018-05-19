@@ -1,12 +1,14 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace Monogame_Engine.Engine
+namespace LevelEditor.Engine
 {
     internal sealed class Light
     {
 
         public Vector3 mLocation;
         public Vector3 mColor;
+
+        public Shadow mShadow;
 
         public float mAmbient;
 
@@ -25,6 +27,8 @@ namespace Monogame_Engine.Engine
             mColor = (color == default(Vector3)) ? new Vector3(1.0f) : color; 
 
             mAmbient = ambient;
+
+            mShadow = new Shadow(this);
 
         }
 

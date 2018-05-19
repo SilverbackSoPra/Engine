@@ -1,9 +1,12 @@
-﻿using Microsoft.Xna.Framework;
-using static System.Math;
-using static Microsoft.Xna.Framework.Vector3;
+﻿using System;
+using Microsoft.Xna.Framework;
 
-namespace Monogame_Engine.Engine.Helper
+namespace LevelEditor.Engine.Helper
 {
+
+    /// <summary>
+    /// 
+    /// </summary>
     class FrustumCulling
     {
         private double mTang;
@@ -12,12 +15,12 @@ namespace Monogame_Engine.Engine.Helper
         private Vector3 mY;
         private Vector3 mZ;
 
-        public FrustumCulling()
-        {
-
-        }
-
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="scene"></param>
+        /// <param name="camera"></param>
+        /// <returns></returns>
         public int CullActorsOutsideFrustum(Scene scene, Camera camera)
         {
 
@@ -28,14 +31,16 @@ namespace Monogame_Engine.Engine.Helper
             foreach (var actorBatch in scene.mActorBatches)
             {
 
-                var radius = actorBatch.mMesh.mRadius;
+                var boundingSphere = actorBatch.mMesh.mMeshData.mBoundingSphere;
 
                 foreach (var actor in actorBatch.mActors)
                 {
 
-                    var scale = actor.mModelMatrix.Scale.Length();
+                    var scale = MathExtension.Max(actor.mModelMatrix.Scale);
 
-                    actor.mRender = IsSphereVisible(actor.mModelMatrix.Translation, radius, 1.0f, camera);
+                    var translation = actor.mModelMatrix.Translation + boundingSphere.Center * scale;
+
+                    actor.mRender = IsSphereVisible(translation, boundingSphere.Radius, scale, camera);
 
                     if (actor.mRender)
                     {
@@ -56,14 +61,14 @@ namespace Monogame_Engine.Engine.Helper
 
             point = point - camera.mLocation;
 
-            var z = Dot(point, mZ);
+            var z = Vector3.Dot(point, mZ);
 
             if (z - d > camera.mFarPlane || z + d < camera.mNearPlane)
             {
                 return false;
             }
 
-            var y = Dot(point, mY);
+            var y = Vector3.Dot(point, mY);
             var localHeight = z * mTang;
 
             if (y - d > localHeight || y + d < -localHeight)
@@ -71,7 +76,7 @@ namespace Monogame_Engine.Engine.Helper
                 return false;
             }
 
-            var x = Dot(point, mX);
+            var x = Vector3.Dot(point, mX);
             var localWidth = localHeight * camera.mAspectRatio;
 
             if (x - d > localWidth || x + d < -localWidth)
@@ -85,11 +90,11 @@ namespace Monogame_Engine.Engine.Helper
 
         private void CalculateFrustum(Camera camera)
         {
-            mTang = Tan(camera.mFieldOfView * PI / 360.0f);
+            mTang = Math.Tan(camera.mFieldOfView * Math.PI / 360.0f);
 
-            mZ = Normalize(camera.Direction);
-            mX = Normalize(Cross(mZ, camera.Up));
-            mY = Normalize(Cross(mX, mZ));
+            mZ = Vector3.Normalize(camera.Direction);
+            mX = Vector3.Normalize(Vector3.Cross(camera.Up, mZ));
+            mY = Vector3.Normalize(Vector3.Cross(mZ, mX));
         }
 
     }

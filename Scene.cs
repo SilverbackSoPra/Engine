@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
-using Monogame_Engine.Engine.Mesh;
+using LevelEditor.Engine.Mesh;
+using LevelEditor.Engine.Postprocessing;
 
-namespace Monogame_Engine.Engine
+namespace LevelEditor.Engine
 {
     /// <summary>
     /// The Scene class is used to represent a scene. This is useful
@@ -30,7 +31,7 @@ namespace Monogame_Engine.Engine
         /// <summary>
         /// Adds an actor to the scene.
         /// </summary>
-        /// <param name="actor">The actor which you want to add to the scene</param>
+        /// <param name="actor"> The actor which you want to add to the scene</param>
         public void Add(Actor actor)
         {
 
@@ -50,9 +51,32 @@ namespace Monogame_Engine.Engine
         }
 
         /// <summary>
+        /// Adds an actor to the scene.
+        /// </summary>
+        /// <param name="interfaceActor">The object which you want to add to the scene</param>
+        public void Add(IActor interfaceActor)
+        {
+            var actor = interfaceActor.MeshActor;
+
+            // Search for the ActorBatch
+            var actorBatch = mActorBatches.Find(ele => ele.mMesh == actor.mMesh);
+
+            // If there is no ActorBatch which already uses the mesh of the Actor we
+            // need to create a new ActorBatch and add it to mActorBatches
+            if (actorBatch == null)
+            {
+                actorBatch = new ActorBatch(actor.mMesh);
+                mActorBatches.Add(actorBatch);
+            }
+
+            actorBatch.Add(actor);
+        }
+
+
+        /// <summary>
         /// Removes an actor from the scene.
         /// </summary>
-        /// <param name="actor"></param>
+        /// <param name="actor">The actor which you want to remove from the scene.</param>
         /// <returns>A boolean whether the actor was found in the scene.
         /// If there is no ActorBatch existing the return value will be null</returns>
         public bool? Remove(Actor actor)
@@ -63,6 +87,23 @@ namespace Monogame_Engine.Engine
             return actorBatch?.Remove(actor);
 
         }
+
+        /// <summary>
+        /// Removes an actor from the scene.
+        /// </summary>
+        /// <param name="interfaceActor">The object which you want remove from the scene.</param>
+        /// <returns>A boolean whether the object wasn't found in the scene.
+        /// If there is no ActorBatch existing the return value will be null</returns>
+        public bool? Remove(IActor interfaceActor)
+        {
+            var actor = interfaceActor.MeshActor;
+
+            var actorBatch = mActorBatches.Find(ele => ele.mMesh == actor.mMesh);
+
+            return actorBatch?.Remove(actor);
+
+        }
+
 
         /// <summary>
         /// Adds a light to the scene.

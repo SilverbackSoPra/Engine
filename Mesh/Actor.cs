@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace Monogame_Engine.Engine.Mesh
+namespace LevelEditor.Engine.Mesh
 {
     /// <summary>
     /// An actor represents an instance of a mesh in a scene.
@@ -12,6 +12,7 @@ namespace Monogame_Engine.Engine.Mesh
         public Matrix mModelMatrix;
 
         public bool mRender;
+        public bool mCastShadow;
 
         /// <summary>
         /// Constructs an <see cref="Actor"/>.
@@ -21,10 +22,11 @@ namespace Monogame_Engine.Engine.Mesh
         {
 
             mMesh = mesh;
-            mModelMatrix = new Matrix();
+            mModelMatrix = Matrix.Identity;
 
             // Actor should be rendered
             mRender = true;
+            mCastShadow = true;
 
         }
     }

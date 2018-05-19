@@ -1,8 +1,8 @@
-﻿using Microsoft.Xna.Framework.Content;
+﻿using LevelEditor.Engine.Shader;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Monogame_Engine.Engine.Shader;
 
-namespace Monogame_Engine.Engine.Renderer
+namespace LevelEditor.Engine.Renderer
 {
     internal sealed class PostProcessRenderer : IRenderer
     {
@@ -30,7 +30,7 @@ namespace Monogame_Engine.Engine.Renderer
             */
 
             mShader.mAlbedoMap = target.mMainRenderTarget;
-            mShader.mSaturation = 1.0f;
+            mShader.mSaturation = scene.mPostProcessing.mSaturation;
 
             mShader.Apply();
 

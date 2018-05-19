@@ -1,7 +1,7 @@
-﻿using Microsoft.Xna.Framework;
-using static System.Math;
+﻿using System;
+using Microsoft.Xna.Framework;
 
-namespace Monogame_Engine.Engine
+namespace LevelEditor.Engine
 {
     /// <summary>
     /// Used to represent a camera in the engine.
@@ -22,6 +22,8 @@ namespace Monogame_Engine.Engine
 
         public Vector3 Direction { get; private set; }
         public Vector3 Up { get; private set; }
+
+        public Vector3 Right { get; private set; }
 
         /// <summary>
         /// Constructs a <see cref="Camera"/>.
@@ -58,13 +60,13 @@ namespace Monogame_Engine.Engine
         public void UpdateView()
         {
             // TODO: We need to change this to a 3rd person camera
-            Direction = Vector3.Normalize(new Vector3((float) (Cos(mRotation.Y) * Sin(mRotation.X)),
-                (float) Sin(mRotation.Y),
-                (float) (Cos(mRotation.Y) * Cos(mRotation.X))));
+            Direction = -Vector3.Normalize(new Vector3((float) (Math.Cos(mRotation.Y) * Math.Sin(mRotation.X)),
+                (float) Math.Sin(mRotation.Y),
+                (float) (Math.Cos(mRotation.Y) * Math.Cos(mRotation.X))));
 
-            var right = new Vector3((float) Sin(mRotation.X - 3.14 / 2.0), 0.0f, (float) Cos(mRotation.X - 3.14 / 2.0));
+            Right = -Vector3.Normalize(new Vector3((float) Math.Sin(mRotation.X - 3.14 / 2.0), 0.0f, (float) Math.Cos(mRotation.X - 3.14 / 2.0)));
 
-            Up = Vector3.Cross(Direction, right);
+            Up = Vector3.Cross(Right, Direction);
 
             mViewMatrix = Matrix.CreateLookAt(mLocation, mLocation + Direction, Up);
         }
@@ -75,7 +77,7 @@ namespace Monogame_Engine.Engine
         public void UpdatePerspective()
         {
             mProjectionMatrix =
-                Matrix.CreatePerspectiveFieldOfView(mFieldOfView / 180.0f * (float)PI, mAspectRatio, mNearPlane, mFarPlane);
+                Matrix.CreatePerspectiveFieldOfView(mFieldOfView / 180.0f * (float)Math.PI, mAspectRatio, mNearPlane, mFarPlane);
         }
     }
 }

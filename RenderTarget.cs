@@ -1,7 +1,8 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
-// Test comment
-namespace Monogame_Engine.Engine
+
+namespace LevelEditor.Engine
 {
     /// <summary>
     /// 
@@ -10,7 +11,7 @@ namespace Monogame_Engine.Engine
     {
 
         public RenderTarget2D mMainRenderTarget;
-        private Texture2D mShadowMap;
+        public RenderTarget2D mShadowRenderTarget;
 
         /// <summary>
         /// Constructs a <see cref="RenderTarget"/>.
@@ -21,7 +22,9 @@ namespace Monogame_Engine.Engine
         /// <param name="shadowMapResolution"></param>
         public RenderTarget(GraphicsDevice device, int width, int height, int shadowMapResolution)
         {
-            mMainRenderTarget = new RenderTarget2D(device, width, height, true, SurfaceFormat.HalfVector4, DepthFormat.Depth24);
+            mMainRenderTarget = new RenderTarget2D(device, width, height, false, SurfaceFormat.HalfVector4, DepthFormat.Depth16);
+            mShadowRenderTarget = new RenderTarget2D(device, shadowMapResolution, shadowMapResolution, false, SurfaceFormat.Single, DepthFormat.Depth16);
+
         }
 
     }

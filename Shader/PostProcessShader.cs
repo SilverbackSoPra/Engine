@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Monogame_Engine.Engine.Shader
+namespace LevelEditor.Engine.Shader
 {
     internal sealed class PostProcessShader : Shader
     {

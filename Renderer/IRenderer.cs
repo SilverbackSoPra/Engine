@@ -1,5 +1,5 @@
 ﻿
-namespace Monogame_Engine.Engine.Renderer
+namespace LevelEditor.Engine.Renderer
 {
     internal interface IRenderer
     {
