@@ -47,12 +47,21 @@ namespace LevelEditor.Engine.Renderer
             mShader.mGlobalLightColor = globalLight.mColor;
             mShader.mGlobalLightAmbient = globalLight.mAmbient;
 
-            mShader.mLightSpaceMatrix = Matrix.Invert(camera.mViewMatrix) * globalLight.mShadow.mViewMatrix * globalLight.mShadow.mProjectionMatrix;
-            mShader.mShadowMap = target.mShadowRenderTarget;
-            mShader.mShadowBias = globalLight.mShadow.mBias;
-            mShader.mShadowNumSamples = Math.Min(globalLight.mShadow.mNumSamples, 16);
-            mShader.mShadowSampleRange = globalLight.mShadow.mSampleRange;
-            mShader.mShadowDistance = globalLight.mShadow.mDistance;
+            if (globalLight.mShadow.mActivated)
+            {
+                mShader.mLightSpaceMatrix = Matrix.Invert(camera.mViewMatrix) * globalLight.mShadow.mViewMatrix *
+                                            globalLight.mShadow.mProjectionMatrix;
+                mShader.mShadowMap = target.mShadowRenderTarget;
+                mShader.mShadowBias = globalLight.mShadow.mBias;
+                mShader.mShadowNumSamples = Math.Min(globalLight.mShadow.mNumSamples, 16);
+                mShader.mShadowSampleRange = globalLight.mShadow.mSampleRange;
+                mShader.mShadowDistance = globalLight.mShadow.mDistance;
+                mShader.mShadowResolution = target.mShadowRenderTarget.Width;
+            }
+            else
+            {
+                mShader.mShadowNumSamples = 0;
+            }
 
             mShader.Apply();
 

@@ -22,13 +22,6 @@ namespace LevelEditor.Engine.Renderer
         public void Render(RenderTarget target, Camera camera, Scene scene)
         {
 
-            /*
-            We don't want use the SpriteBatch class and should change to our own vertex structure
-            To improve this: http://www.riemers.net/eng/Tutorials/XNA/Csharp/Series1/Terrain_lighting.php
-            Some further resources: https://docs.microsoft.com/en-us/previous-versions/windows/silverlight/dotnet-windows-silverlight/bb199731%28v%3dxnagamestudio.35%29
-            and: http://www.riemers.net/eng/Tutorials/XNA/Csharp/Series1/VertexBuffer_and_IndexBuffer.php
-            */
-
             mShader.mAlbedoMap = target.mMainRenderTarget;
             mShader.mSaturation = scene.mPostProcessing.mSaturation;
 

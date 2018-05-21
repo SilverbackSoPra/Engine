@@ -52,10 +52,12 @@ namespace LevelEditor.Engine.Renderer
         private const string ForwardShaderPath = "Shader/Forward";
         private const string PostProcessShaderPath = "Shader/PostProcess";
         private const string ShadowShaderPath = "Shader/Shadow";
+        private const string FxaaShaderPath = "Shader/FXAA";
 
         private readonly ForwardRenderer mForwardRenderer;
         private readonly PostProcessRenderer mPostProcessRenderer;
         private readonly ShadowRenderer mShadowRenderer;
+        private readonly FxaaRenderer mFxaaRenderer;
 
         private readonly GraphicsDevice mGraphicsDevice;
 
@@ -81,6 +83,7 @@ namespace LevelEditor.Engine.Renderer
             mForwardRenderer = new ForwardRenderer(device, content, ForwardShaderPath);
             mPostProcessRenderer = new PostProcessRenderer(device, content, PostProcessShaderPath);
             mShadowRenderer = new ShadowRenderer(device, content, ShadowShaderPath);
+            mFxaaRenderer = new FxaaRenderer(device, content, FxaaShaderPath);
 
         }
 
@@ -103,11 +106,16 @@ namespace LevelEditor.Engine.Renderer
                 mGraphicsDevice.BlendState = BlendState.Opaque;
                 mGraphicsDevice.RasterizerState = RasterizerState.CullCounterClockwise;
 
-                mGraphicsDevice.SetRenderTarget(target.mShadowRenderTarget);
+                var globaLight = scene.mLights[0];
 
-                mGraphicsDevice.Clear(Color.White);
+                if (globaLight.mShadow.mActivated)
+                {
+                    mGraphicsDevice.SetRenderTarget(target.mShadowRenderTarget);
 
-                mShadowRenderer.Render(target, camera, scene);
+                    mGraphicsDevice.Clear(Color.White);
+
+                    mShadowRenderer.Render(target, camera, scene);
+                }
 
                 mGraphicsDevice.SetRenderTarget(target.mMainRenderTarget);
 
@@ -115,7 +123,16 @@ namespace LevelEditor.Engine.Renderer
 
                 mForwardRenderer.Render(target, camera, scene);
 
-                mGraphicsDevice.SetRenderTarget(null);
+                // Check which framebuffer we need to use.
+                // If we want to have Anti-Aliasing we need to bind the post-process render target
+                if (scene.mPostProcessing.mFxaa.mActivated)
+                {
+                    mGraphicsDevice.SetRenderTarget(target.mPostProcessRenderTarget);
+                }
+                else
+                {
+                    mGraphicsDevice.SetRenderTarget(null);
+                }
 
                 mGraphicsDevice.SetVertexBuffer(mQuad.mBuffer);
 
@@ -123,6 +140,13 @@ namespace LevelEditor.Engine.Renderer
                 mGraphicsDevice.Viewport = viewport;
 
                 mPostProcessRenderer.Render(target, camera, scene);
+
+                if (scene.mPostProcessing.mFxaa.mActivated)
+                {
+                    mGraphicsDevice.SetRenderTarget(null);
+
+                    mFxaaRenderer.Render(target, camera, scene);
+                }
 
                 mGraphicsDevice.Viewport = defaultViewport;
 

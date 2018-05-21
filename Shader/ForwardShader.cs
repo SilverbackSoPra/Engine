@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Xml;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -20,6 +21,7 @@ namespace LevelEditor.Engine.Shader
         private readonly EffectParameter mShadowNumSamplesParameter;
         private readonly EffectParameter mShadowSampleRangeParameter;
         private readonly EffectParameter mShadowDistanceParameter;
+        private readonly EffectParameter mShadowResolutionParameter;
 
         public Matrix mViewMatrix;
         public Matrix mProjectionMatrix;
@@ -34,6 +36,7 @@ namespace LevelEditor.Engine.Shader
         public int mShadowNumSamples;
         public float mShadowSampleRange;
         public float mShadowDistance;
+        public float mShadowResolution;
 
         public ForwardShader(ContentManager content, string shaderPath) : base(content, shaderPath)
         { 
@@ -53,6 +56,7 @@ namespace LevelEditor.Engine.Shader
             mShadowNumSamplesParameter = mShader.Parameters["shadowNumSamples"];
             mShadowSampleRangeParameter = mShader.Parameters["shadowSampleRange"];
             mShadowDistanceParameter = mShader.Parameters["shadowDistance"];
+            mShadowResolutionParameter = mShader.Parameters["shadowResolution"];
 
         }
 
@@ -74,6 +78,7 @@ namespace LevelEditor.Engine.Shader
             mShadowNumSamplesParameter.SetValue(mShadowNumSamples);
             mShadowSampleRangeParameter.SetValue(mShadowSampleRange);
             mShadowDistanceParameter.SetValue(mShadowDistance);
+            mShadowResolutionParameter.SetValue(mShadowResolution);
 
             base.Apply();
         }

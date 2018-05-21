@@ -5,7 +5,7 @@ namespace LevelEditor.Engine.Mesh
 {
 
     /// <summary>
-    /// 
+    /// Contains all the data of a mesh like textures or vertices.
     /// </summary>
     internal sealed class MeshData
     {
@@ -21,7 +21,7 @@ namespace LevelEditor.Engine.Mesh
         public BoundingSphere mBoundingSphere;
 
         /// <summary>
-        /// 
+        /// Constructs a <see cref="MeshData"/>
         /// </summary>
         public MeshData()
         {

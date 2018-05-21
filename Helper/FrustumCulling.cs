@@ -5,10 +5,11 @@ namespace LevelEditor.Engine.Helper
 {
 
     /// <summary>
-    /// 
+    /// Frustum culling should reduce the number of actors rendered in the scene.
     /// </summary>
     class FrustumCulling
     {
+
         private double mTang;
 
         private Vector3 mX;
@@ -16,10 +17,10 @@ namespace LevelEditor.Engine.Helper
         private Vector3 mZ;
 
         /// <summary>
-        /// 
+        /// Disables all actors which are not visible to the camera
         /// </summary>
-        /// <param name="scene"></param>
-        /// <param name="camera"></param>
+        /// <param name="scene">The scene where the actors should be disabled</param>
+        /// <param name="camera">The camera from which the scene should be rendered</param>
         /// <returns></returns>
         public int CullActorsOutsideFrustum(Scene scene, Camera camera)
         {

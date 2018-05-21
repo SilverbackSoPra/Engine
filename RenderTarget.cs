@@ -11,6 +11,7 @@ namespace LevelEditor.Engine
     {
 
         public RenderTarget2D mMainRenderTarget;
+        public RenderTarget2D mPostProcessRenderTarget;
         public RenderTarget2D mShadowRenderTarget;
 
         /// <summary>
@@ -23,8 +24,8 @@ namespace LevelEditor.Engine
         public RenderTarget(GraphicsDevice device, int width, int height, int shadowMapResolution)
         {
             mMainRenderTarget = new RenderTarget2D(device, width, height, false, SurfaceFormat.HalfVector4, DepthFormat.Depth16);
+            mPostProcessRenderTarget = new RenderTarget2D(device, width, height, false, SurfaceFormat.Color, DepthFormat.None);
             mShadowRenderTarget = new RenderTarget2D(device, shadowMapResolution, shadowMapResolution, false, SurfaceFormat.Single, DepthFormat.Depth16);
-
         }
 
     }

@@ -5,7 +5,7 @@ namespace LevelEditor.Engine.Mesh
 {
 
     /// <summary>
-    /// 
+    /// Represents a mesh or model and contains all necessary buffers for the GPU.
     /// </summary>
     internal sealed class Mesh
     {

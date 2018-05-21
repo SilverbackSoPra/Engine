@@ -17,7 +17,7 @@ namespace LevelEditor.Engine.Mesh
         /// <summary>
         /// Constructs an <see cref="Actor"/>.
         /// </summary>
-        /// <param name="mesh"></param>
+        /// <param name="mesh">The <see cref="Mesh"/> which the actor represents in the scene</param>
         public Actor(Mesh mesh)
         {
 
