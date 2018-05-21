@@ -2,6 +2,10 @@
 
 namespace LevelEditor.Engine
 {
+
+    /// <summary>
+    /// Represents a light which can be added to a scene.
+    /// </summary>
     internal sealed class Light
     {
 

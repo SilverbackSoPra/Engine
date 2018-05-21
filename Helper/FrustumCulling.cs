@@ -5,7 +5,7 @@ namespace LevelEditor.Engine.Helper
 {
 
     /// <summary>
-    /// Frustum culling should reduce the number of actors rendered in the scene.
+    /// Frustum culling reduces the number of actors rendered in the scene.
     /// </summary>
     class FrustumCulling
     {

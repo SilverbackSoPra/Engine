@@ -1,5 +1,5 @@
-﻿//using Assimp;
-//using Assimp.Configs;
+﻿using Assimp;
+using Assimp.Configs;
 using LevelEditor.Engine.Mesh;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -7,7 +7,7 @@ namespace LevelEditor.Engine.Loader
 {
     internal class MeshLoader
     {
-        /*
+        
         public static Mesh.Mesh LoadMesh(string filename)
         {
 
@@ -41,11 +41,21 @@ namespace LevelEditor.Engine.Loader
             meshData.mVertices = new VertexPositionTexture[vertexCount];
             meshData.mIndices = new int[indexCount];
 
-
+            if (scene.MaterialCount == 1)
+            {
+                
+            }
 
             return new Mesh.Mesh(null);
         }
-        */
+
+        private static bool LoadMaterial()
+        {
+
+            return true;
+
+        }
+        
     }
 
 }

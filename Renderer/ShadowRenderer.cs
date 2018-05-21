@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using LevelEditor.Engine.Shader;
 
 namespace LevelEditor.Engine.Renderer
